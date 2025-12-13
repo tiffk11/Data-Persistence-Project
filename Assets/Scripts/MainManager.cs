@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,10 +12,10 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
-    private Text ScoreText;
+    public Text ScoreText;
     public Text highScoreText;
     public GameObject GameOverText;
-    
+
     private bool m_Started = false;
     
     private bool m_GameOver = false;
@@ -23,6 +24,8 @@ public class MainManager : MonoBehaviour
     void Start()
     {
         UpdateHighScoreText();
+
+        HighScoreManager.Instance.score = 0;
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);

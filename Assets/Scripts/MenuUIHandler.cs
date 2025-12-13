@@ -15,6 +15,7 @@ public class MenuUIHandler : MonoBehaviour
 
     private void Start()
     {
+        HighScoreManager.Instance.SaveHighScore();
         UpdateHighScoreText();
         nameInputField.text = HighScoreManager.Instance.Name;
     }
