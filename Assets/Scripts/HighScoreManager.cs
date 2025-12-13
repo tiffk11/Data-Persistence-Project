@@ -8,6 +8,7 @@ public class HighScoreManager : MonoBehaviour
     private MainManager mainManager;
 
     public string Name;
+    public int score;
     public int highScore;
 
     private void Awake()
@@ -45,11 +46,13 @@ public class HighScoreManager : MonoBehaviour
     {
         highScore = PlayerPrefs.GetInt("HighScore", 0);
 
-        if (MainManager.m_Points > PlayerPrefs.GetInt("HighScore", 0))
+        if (score > PlayerPrefs.GetInt("HighScore", 0))
         {
-            PlayerPrefs.SetInt("HighScore", MainManager.m_Points);
-            highScore = MainManager.m_Points;
+            PlayerPrefs.SetInt("HighScore", score);
+            highScore = score;
         }
+
+        Debug.Log("High Score: " + highScore);
     }
 
     public void LoadName()

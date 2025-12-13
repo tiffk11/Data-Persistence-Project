@@ -11,12 +11,11 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
-    public Text ScoreText;
+    private Text ScoreText;
     public Text highScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
-    public int m_Points;
     
     private bool m_GameOver = false;
 
@@ -67,14 +66,17 @@ public class MainManager : MonoBehaviour
 
     void AddPoint(int point)
     {
-        m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        HighScoreManager.Instance.score += point;
+        ScoreText.text = "Score : " + HighScoreManager.Instance.score;
+
+        Debug.Log("Score:" + HighScoreManager.Instance.score);
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        HighScoreManager.Instance.SaveHighScore();
     }
 
     private void UpdateHighScoreText()
