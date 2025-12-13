@@ -17,12 +17,12 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
 
     private bool m_Started = false;
-    
     private bool m_GameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        HighScoreManager.Instance.SetHighScore();
         UpdateHighScoreText();
 
         HighScoreManager.Instance.score = 0;
@@ -79,11 +79,10 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-        HighScoreManager.Instance.SaveHighScore();
     }
 
     private void UpdateHighScoreText()
     {
-        highScoreText.text = "High Score: " + HighScoreManager.Instance.Name + " - " + HighScoreManager.Instance.highScore;
+        highScoreText.text = "High Score: " + HighScoreManager.Instance.highScoreName + " - " + HighScoreManager.Instance.highScore;
     }
 }

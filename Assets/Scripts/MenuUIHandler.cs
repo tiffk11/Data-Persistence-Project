@@ -15,24 +15,20 @@ public class MenuUIHandler : MonoBehaviour
 
     private void Start()
     {
-        HighScoreManager.Instance.SaveHighScore();
         UpdateHighScoreText();
-        nameInputField.text = HighScoreManager.Instance.Name;
+        nameInputField.text = HighScoreManager.Instance.highScoreName;
     }
 
     public void StartGame()
     {
         SceneManager.LoadScene(1);
         string nameInputText = nameInputField.text;
-        HighScoreManager.Instance.Name = nameInputText;
+        HighScoreManager.Instance.name = nameInputText;
         Debug.Log("Name: " + nameInputText);
-        HighScoreManager.Instance.Name = nameInputText;
-        HighScoreManager.Instance.SaveHighScore();
     }
 
     public void QuitGame()
     {
-        HighScoreManager.Instance.SaveHighScore();
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -42,6 +38,9 @@ public class MenuUIHandler : MonoBehaviour
 
     private void UpdateHighScoreText()
     {
-        highScoreText.text = "High Score: " + HighScoreManager.Instance.Name + " - " + HighScoreManager.Instance.highScore;
+        if (HighScoreManager.Instance.highScoreName != null)
+        {
+            highScoreText.text = "High Score: " + HighScoreManager.Instance.highScoreName + " - " + HighScoreManager.Instance.highScore;
+        }
     }
 }

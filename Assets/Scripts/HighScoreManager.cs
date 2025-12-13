@@ -7,9 +7,10 @@ public class HighScoreManager : MonoBehaviour
     public static HighScoreManager Instance;
     private MainManager mainManager;
 
-    public string Name;
+    public string name;
     public int score;
     public int highScore;
+    public string highScoreName;
 
     private void Awake()
     {
@@ -22,48 +23,49 @@ public class HighScoreManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        LoadName();
+        LoadHighScore();
     }
 
+    public void SetHighScore()
+    {
+        if (score > highScore)
+        {
+            highScore = score;
+            highScoreName = name;
+            SaveHighScore();
+        }
+    }
 
     [System.Serializable]
     class SaveData
     {
-        public string Name;
+        public string name;
+        public int highScore;
     }
-
-    public void SaveName()
-    {
-        SaveData data = new SaveData();
-        data.Name = Name;
-
-        string json = JsonUtility.ToJson(data);
-
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-    }
-
+    
     public void SaveHighScore()
     {
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        SaveData data = new SaveData();
+        data.name = highScoreName;
+        data.highScore = highScore;
 
-        if (score > PlayerPrefs.GetInt("HighScore", 0))
-        {
-            PlayerPrefs.SetInt("HighScore", score);
-            highScore = score;
-        }
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
 
         Debug.Log("High Score: " + highScore);
     }
 
-    public void LoadName()
+    public void LoadHighScore()
     {
         string path = Application.persistentDataPath + "/savefile.json";
+
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            Name = data.Name;
+            highScoreName = data.name;
+            highScore = data.highScore;
         }
     }
 }
